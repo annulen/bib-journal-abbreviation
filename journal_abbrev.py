@@ -6,6 +6,10 @@ import os
 import re
 import argparse
 
+
+re_journal_line = re.compile(r"^journal", re.I)
+
+
 def abbreviate(line, journal_to_abbr):
     if re.search('".*"', line) is not None:
         journal_name_template = '"{}"'
@@ -24,11 +28,10 @@ def abbreviate(line, journal_to_abbr):
 
 
 
-
 def main(journal_to_abbr):
     for line in sys.stdin:
         line_strip = line.strip()
-        if line_strip.startswith('journal'):
+        if re_journal_line.search(line_strip):
             new_line = abbreviate(line, journal_to_abbr)
             print(new_line.rstrip())
         else:
