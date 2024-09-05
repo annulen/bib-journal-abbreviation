@@ -2,6 +2,7 @@
 
 import sys
 import json
+import os
 import re
 import argparse
 
@@ -39,7 +40,8 @@ if __name__ == '__main__':
     parser.add_argument('--user-json', type=str, default=None, help="customized json file")
     args = parser.parse_args()
 
-    with open('journals.json') as fin:
+    resources_dir = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(resources_dir, 'journals.json')) as fin:
         journal_to_abbr = json.load(fin)
 
     if args.user_json is not None:
